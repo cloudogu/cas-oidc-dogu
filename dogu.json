@@ -1,0 +1,30 @@
+{
+  "Name": "testing/cas-oidc-client",
+  "Version": "0.1.0-1",
+  "DisplayName": "OIDC Test Client",
+  "Description": "OIDC Test Client",
+  "Url": "",
+  "Tags": [
+    "webapp",
+    "warp"
+  ],
+  "Logo": "https://cloudogu.com/images/dogus/cas.png",
+  "Image": "registry.cloudogu.com/testing/cas-oidc-client",
+  "Dependencies": [
+    "cas"
+  ],
+  "ServiceAccounts": [
+    {
+      "Type": "cas"
+    }
+  ],
+  "HealthChecks": [
+    {
+      "Type": "tcp",
+      "Port": 5555
+    },
+    {
+      "Type": "state"
+    }
+  ]
+}
