@@ -33,12 +33,13 @@ func main() {
 	clientSecret := appConfig.ClientSecret
 	issuer := appConfig.Issuer
 	port := appConfig.Port
+	fqdn := appConfig.FQDN
 
 	logrus.Info("%+v", appConfig)
 
 	scopes := strings.Split("openid email groups", " ")
 
-	redirectURI := fmt.Sprintf("http://localhost:8080%s", callbackPath)
+	redirectURI := fmt.Sprintf("%s%s", fqdn, callbackPath)
 	cookieHandler := utils.NewCookieHandler(key, key, utils.WithUnsecure())
 
 	options := []rp.Option{

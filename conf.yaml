@@ -1,5 +1,5 @@
 issuer: https://localhost:8443/cas/oidc
-fqdn: localhost:8443
+fqdn: http://localhost:8080
 port: 8080
 client_id: cas-oidc-client
 client_secret: T0OpxpbdyFixfwMc
