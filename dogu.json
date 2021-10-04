@@ -13,9 +13,15 @@
   "Dependencies": [
     "cas"
   ],
+  "Properties": {
+    "logoutUri": "/logout"
+  },
   "ServiceAccounts": [
     {
-      "Type": "cas"
+      "Type": "cas",
+      "Params": [
+        "oidc"
+      ]
     }
   ],
   "HealthChecks": [

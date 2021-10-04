@@ -69,6 +69,8 @@ func main() {
 	//for demonstration purposes the returned userinfo response is written as JSON object onto response
 	http.HandleFunc("/cas-oidc-client/", serveFiles)
 
+	http.HandleFunc("/cas-oidc-client/logout", logout)
+
 	//for demonstration purposes the returned userinfo response is written as JSON object onto response
 	marshalUserinfo := func(w http.ResponseWriter, r *http.Request, tokens *oidc.Tokens, state string, rp rp.RelyingParty, info oidc.UserInfo) {
 		data, err := json.Marshal(info)
@@ -78,28 +80,7 @@ func main() {
 		}
 		_, _ = w.Write(data)
 	}
-
-	//you could also just take the access_token and id_token without calling the userinfo endpoint:
-	//
-	//marshalToken := func(w http.ResponseWriter, r *http.Request, tokens *oidc.Tokens, state string, rp rp.RelyingParty) {
-	//	data, err := json.Marshal(tokens)
-	//	if err != nil {
-	//		http.Error(w, err.Error(), http.StatusInternalServerError)
-	//		return
-	//	}
-	//	w.Write(data)
-	//}
-
-	//register the CodeExchangeHandler at the callbackPath
-	//the CodeExchangeHandler handles the auth response, creates the token request and calls the callback function
-	//with the returned tokens from the token endpoint
-	//in this example the callback function itself is wrapped by the UserinfoCallback which
-	//will call the Userinfo endpoint, check the sub and pass the info into the callback function
 	http.Handle(callbackPath, rp.CodeExchangeHandler(rp.UserinfoCallback(marshalUserinfo), provider))
-
-	//if you would use the callback without calling the userinfo endpoint, simply switch the callback handler for:
-	//
-	//http.Handle(callbackPath, rp.CodeExchangeHandler(marshalToken, provider))
 
 	logrus.Infof("listening on http://localhost:%s/cas-oidc-client/", port)
 	logrus.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
@@ -112,4 +93,9 @@ func serveFiles(w http.ResponseWriter, r *http.Request) {
 		p = "./static/index.html"
 	}
 	http.ServeFile(w, r, p)
+}
+
+func logout(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r)
+	w.WriteHeader(200)
 }
