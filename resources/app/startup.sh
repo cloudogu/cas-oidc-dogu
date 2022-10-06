@@ -18,4 +18,6 @@ echo "                       'V/(/////////////////////////////V'      "
 doguctl template conf.yaml.tpl conf.yaml
 doguctl config --global certificate/server.crt > /etc/ssl/certs/ces.crt
 
+doguctl state ready
+
 ./oidc-client

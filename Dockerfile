@@ -36,5 +36,6 @@ RUN set -x \
 USER oidc
 
 HEALTHCHECK CMD doguctl healthy cas-oidc-client || exit 1
+
 WORKDIR /app
 CMD /app/startup.sh
